@@ -1,0 +1,182 @@
+export PS1='[$(pwd)]$ '
+export PATH=$PATH:/Library/ApacheMaven/apache-maven-3.8.1/bin:/usr/local/mysql-8.0.28-macos11-x86_64/bin:/Applications/p4merge.app/Contents/MacOS
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home/
+export PYTHON_HOME=/Library/Frameworks/Python.framework/Versions/3.7/bin
+#git auto completion
+#if [ -f git_bash_autocomplete ]; then
+#        . git_bash_autocomplete
+#fi
+
+
+#p4merge
+alias p4merge='/Applications/p4merge.app/Contents/MacOS/p4merge'
+#idea
+alias idea='open -na "IntelliJ IDEA.app"'
+alias ilog='tail -f /Users/kojayaku/Library/Logs/JetBrains/IntelliJIdea2023.1/idea.log'
+#pycharm
+alias plog='tail -f /Users/kojayaku/Library/Logs/JetBrains/PyCharm2021.2/idea.log'
+#timer
+alias timer='while true; do echo -ne "`date`\r"; done'
+
+# to add space to dock - "defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="small-spacer-tile";}'; killall Dock"
+# to change dock hide and show speed - "defaults write com.apple.dock autohide-delay -float 0 && defaults write com.apple.dock autohide-time-modifier -float 0.5 && killall Dock"
+# fine tune - "defaults write com.apple.dock autohide-time-modifier -float 1 && killall Dock"
+
+alias ll='ls -lrt'
+alias scp='scp -O'
+alias rpminstall='rpm -Uv --force --nodeps rpm_name'
+alias rpmextract='rpm2cpio rpm_name | cpio -idmv'
+alias commitmsg='cat /home/kojayaku/commit_msg_template'
+alias stash='echo "git stash push -m welcome_cart app/views/cart/welcome.thtml"'
+alias carsbuild='make clean;make rpm'
+#fwrule="iptables -A INPUT -p tcp  --match multiport --dports 1521,8000 -j ACCEPT"
+fwrule="iptables -A DEFAULTCHAIN -s 0.0.0.0/0 -p tcp -m tcp --dport 1521 -j ACCEPT"
+devPort="iptables -A DEFAULTCHAIN -s 0.0.0.0/0 -p tcp -m tcp --dport 8000 -j ACCEPT"
+alias fw='echo $fwrule'
+alias iptable='echo $fwrule;echo $devPort'
+alias bigfiles='set -x;du -ha /Users/kojayaku/ | sort -n -r | head -n 20;set +x'
+alias decrypt_gpg='echo "gpgtar --decrypt <out_file_name>"'
+
+#NAS
+#ESX k8HZ84G72s6n
+alias 151='151p; ssh  root@10.126.68.151'
+alias 109='109p; ssh  root@10.126.68.109'
+alias 151p='echo P@sbg1234: /vmfs/volumes/5909a244-b6392993-5a47-70db982878bc'
+alias 109p='echo k8HZ84G72s6n : /vmfs/volumes/5909989b-ab31188e-8348-70db982877a0'
+
+#VMs
+alias 34='ssh  root@10.126.68.34'
+alias 34admin='ssh  admin@10.126.68.34'
+alias 35='ssh  root@10.126.68.35'
+alias 35admin='ssh  admin@10.126.68.35'
+alias 36='ssh  root@10.126.68.36'
+alias 36admin='ssh  admin@10.126.68.36'
+alias 41='ssh  root@10.126.68.41'
+alias 41admin='ssh  admin@10.126.68.41'
+alias 42='ssh  root@10.126.68.42'
+alias 42admin='ssh  admin@10.126.68.42'
+alias 47='ssh  root@10.126.68.47'
+alias 47admin='ssh  admin@10.126.68.47'
+alias 192='ssh root@10.126.68.192'
+alias 192admin='ssh  admin@10.126.68.192'
+alias 193='ssh  root@10.126.68.193'
+alias 193admin='ssh  admin@10.126.68.193'
+alias 197='ssh  root@10.126.68.197'
+alias 197admin='ssh  admin@10.126.68.197'
+alias 199='ssh  root@10.126.68.199'
+alias 199admin='ssh  admin@10.126.68.199'
+alias spadev='echo "ssh root@10.56.60.234 -p 32770; password is DRLH"; ssh root@10.56.60.234 -p 32770'
+
+#enable SSH password less
+alias 192pl='ssh-copy-id root@10.126.68.192;192'
+alias 193pl='ssh-copy-id root@10.126.68.193;193'
+alias 197pl='ssh-copy-id root@10.126.68.197;197'
+alias 199pl='ssh-copy-id root@10.126.68.199;199'
+
+
+#open jacoco report
+alias openreport='open -a "Google Chrome" target/site/jacoco/index.html'
+#mvn test with jacoco report
+function mvntestreport {
+echo "running test and getting report for $1"
+mvn clean install test -DskipJSCompress=true -Dtest=$1 -Pjacoco -Ddisable.pdp.facade=true -DskipFlexBuild=true -DisKeyStoreExternal=true;openreport
+}
+alias mvntestclassreport='mvntestreport'
+
+#mvn  test specific classess
+function mvntestclassdebug {
+ echo "mvn clean install test -DskipJSCompress=true -Dtest=$1 -Ddisable.pdp.facade=true -DskipFlexBuild=true -Dmaven.surefire.debug -DisKeyStoreExternal=true"
+ mvn clean install test -DskipJSCompress=true -Dtest=$1 -Ddisable.pdp.facade=true -DskipFlexBuild=true -Dmaven.surefire.debug -DisKeyStoreExternal=true;
+}
+alias mvntestclassdebug='mvntestclassdebug'
+function mvntestclass {
+ echo "mvn clean install test -DskipJSCompress=true -Dtest=$1 -Ddisable.pdp.facade=true -DskipFlexBuild=true -DisKeyStoreExternal=true"
+ mvn clean install test -DskipJSCompress=true -Dtest=$1 -Ddisable.pdp.facade=true -DskipFlexBuild=true -DisKeyStoreExternal=true;
+}
+alias mvntestclass='mvntestclass'
+
+
+
+#VMs
+alias 201='ssh -oCiphers=aes128-cbc root@10.126.68.34'
+alias 201admin='ssh -oCiphers=aes128-cbc admin@10.126.68.34'
+alias 22='ssh -oCiphers=aes128-cbc root@10.126.68.35'
+alias 22admin='ssh -oCiphers=aes128-cbc admin@10.126.68.35'
+alias 201admin='ssh -oCiphers=aes128-cbc admin@10.126.68.35'
+alias 21='ssh -oCiphers=aes128-cbc root@10.126.68.36'
+alias 21admin='ssh -oCiphers=aes128-cbc admin@10.126.68.36'
+alias 24='ssh -oCiphers=aes128-cbc root@10.126.68.199'
+alias 24admin='ssh -oCiphers=aes128-cbc admin@10.126.68.199'
+
+#remove entry from known_hosts
+function rem { sed -i'.original' -e "/.$1 /d" /Users/kojayaku/.ssh/known_hosts ;}
+alias rem='rem'
+
+#find given file
+function findfile { find /Users/kojayaku/Documents/GitHub/ -name $1* ;}
+alias findfile='findfile'
+
+#find pom.xmls
+#find . -name pom.xml | xargs grep provisioning-service
+function pomfind { find /Users/kojayaku/Documents/GitHub/ -name pom.xml | xargs grep -w $1 ; }
+alias pomfind='pomfind'
+
+
+function openWireshark {
+if ! [ -z "$1" ];then
+	/Applications/Wireshark.app/Contents/MacOS/Wireshark -r $1 &
+else
+	/Applications/Wireshark.app/Contents/MacOS/Wireshark &
+fi
+}
+alias wireshark='openWireshark'
+
+#pmbure build machines
+alias sj57='ssh kojayaku@sj-pmbure57-lnx'
+
+# Setting PATH for Python 3.7
+# The original version is saved in .profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
+export PATH
+
+#python
+alias python='python3'
+
+#mysql
+alias mysql_login='echo "mysql -u root -p -- sql123!!"'
+# added by Anaconda3 2019.10 installer
+# >>> conda init >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$(CONDA_REPORT_ERRORS=false '/opt/anaconda3/bin/conda' shell.bash hook 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    \eval "$__conda_setup"
+else
+    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/anaconda3/etc/profile.d/conda.sh"
+        CONDA_CHANGEPS1=false conda activate base
+    else
+        \export PATH="/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda init <<<
+
+export NVM_DIR="/Users/kojayaku/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+
+
+
+#golang env
+alias goworkspace="cd /Users/kojayaku/Documents/golang-workspace"
+export GOENV="/Users/kojayaku/Library/Application Support/go/env"
+export GOPATH="/Users/kojayaku/Documents/golang-workspace"
+export GOBIN="/Users/kojayaku/Documents/golang-workspace/bin"
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+
+
+# Added by Toolbox App
+export PATH="$PATH:/usr/local/bin"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
